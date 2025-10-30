@@ -1,18 +1,23 @@
+import { lazy, Suspense } from "react"
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
-import Home from "./pages/home/Home"
-import Cart from "./pages/cart/Cart"
-import Search from "./pages/search/Search"
+import Loader from "./components/Loader";
+
+const Home = lazy(() => import("./pages/home/Home"));
+const Cart = lazy(() => import("./pages/cart/Cart"));
+const Search = lazy(() => import("./pages/search/Search"));
 
 
 const App = () => {
   return (
     <>
       <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/cart" element={<Cart />} />
-        </Routes>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/cart" element={<Cart />} />
+          </Routes>
+        </Suspense>
       </Router>
     </>
   )
