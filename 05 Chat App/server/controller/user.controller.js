@@ -1,5 +1,6 @@
 import { catchAsyncError } from "../middleware/catchAsyncError.middleware.js"
 import { User } from "../models/user.model.js";
+import { generateJWTToken } from "../utils/jwtToken.js";
 
 // Register
 export const signup = catchAsyncError(async (req, res, next) => {
@@ -44,6 +45,8 @@ export const signup = catchAsyncError(async (req, res, next) => {
             url: "",
         }
     });
+
+    generateJWTToken(user, "User Registered Successfully", 201, res);
 
 });
 
