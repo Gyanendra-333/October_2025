@@ -2,6 +2,7 @@ import { catchAsyncError } from "../middleware/catchAsyncError.middleware.js"
 import { Message } from "../models/message.model.js";
 import { User } from "../models/user.model.js";
 import { v2 as cloudinary } from "cloudinary"
+import { getReceiverSocketId, io } from "../utils/socket.js";
 
 // Get All User 
 export const getAllUsers = catchAsyncError(async (req, res, next) => {
@@ -88,5 +89,19 @@ export const sendMessage = catchAsyncError(async (req, res, next) => {
             })
         }
     }
+
+    const newMessage = await Message.create({
+        senderId,
+        recieverId,
+        text: sanitizeText,
+        media: mediaUrl
+    })
+
+    const receiverSocketId = getReceiverSocketId(recieverId);
+    if (receiverSocketId) {
+        io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
+
+    res.status(201).json(newMessage);
 
 });
