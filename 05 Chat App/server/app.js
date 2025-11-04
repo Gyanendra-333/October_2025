@@ -7,6 +7,7 @@ import { dbConnect } from "./database/db.js";
 
 // Route import 
 import userRouter from "./routes/user.route.js";
+import messageRouter from "./routes/message.route.js";
 
 const app = express();
 config({ path: "./config/.env" });
@@ -27,5 +28,6 @@ app.use(fileUpload({
 dbConnect();
 
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/message", messageRouter);
 
 export default app;
