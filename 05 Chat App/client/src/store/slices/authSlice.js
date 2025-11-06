@@ -34,13 +34,13 @@ export const handleLogout = createAsyncThunk("user/sign-out", async (_, thunkAPI
 // Login 
 export const login = createAsyncThunk("user/sign-in", async (data, thunkAPI) => {
     try {
-        let res = await axiosInstance.get("/user/sign-in", data)
+        let res = await axiosInstance.post("/user/sign-in", data)
         connectSocket(res?.data);
         toast.success("Login Successfull")
         console.log("login res", res?.data)
         return null;
     } catch (error) {
-        toast.error("Login error", error)
+        toast.error(error?.response?.data?.message || "Login failed", error)
         console.log(error);
         return thunkAPI.rejectWithValue("login error");
     }

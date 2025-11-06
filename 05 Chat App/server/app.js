@@ -14,7 +14,7 @@ config({ path: "./config/.env" });
 
 app.use(cors({
     origin: process.env.FRONTEND_URL,
-    Credential: true,
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"]
 }));
 app.use(cookieParser());

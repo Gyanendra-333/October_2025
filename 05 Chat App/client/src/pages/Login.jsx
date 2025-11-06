@@ -1,6 +1,7 @@
 import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare } from "lucide-react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { login } from "../store/slices/authSlice";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,7 +15,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(login(formData))
+    dispatch(login(formData))
   };
 
   return (
