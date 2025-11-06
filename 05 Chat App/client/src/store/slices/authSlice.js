@@ -53,7 +53,13 @@ const authSlice = createSlice({
             .addCase(getUser.rejected, (state, action) => {
                 state.authUser = null;
                 state.isCheckingAuth = false;
-            });
+            })
+            .addCase(logout.fulfilled, (state) => {
+                state.authUser = null;
+            })
+            .addCase(logout.rejected, (state) => {
+                state.authUser = state.authUser;
+            })
     }
 });
 

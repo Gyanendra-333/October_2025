@@ -1,13 +1,14 @@
 import { LogOut, MessageSquare, Settings, User } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { logout } from "../store/slices/authSlice"
 
 const Navbar = () => {
   const { authUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch();
+    dispatch(logout);
   };
 
   return (
@@ -15,12 +16,12 @@ const Navbar = () => {
       {/* Logo / Brand Name */}
       <div className="flex items-center space-x-3">
         <img
-          src="/logo.png"
+          src="https://png.pngtree.com/png-clipart/20190604/original/pngtree-creative-company-logo-png-image_1197025.jpg"
           alt="Logo"
           className="w-9 h-9 object-cover rounded-full"
         />
         <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">
-          MyApp
+          My App
         </h1>
       </div>
 
@@ -83,7 +84,7 @@ const Navbar = () => {
             </Link>
             <Link
               to="/register"
-              className="px-4 py-2 text-sm font-medium rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition"
+              className="px-4 py-2 text-sm font-medium rounded-lg border border-blue-600 text-white hover:bg-blue-600 hover:text-white transition"
             >
               Sign Up
             </Link>
