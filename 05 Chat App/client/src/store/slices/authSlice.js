@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../lib/axios";
-import { connectSocket } from "../../lib/socket";
+import { connectSocket, disconnectSocket } from "../../lib/socket";
+import { toast } from "react-toastify";
 
 export const getUser = createAsyncThunk("user/me", async (_, thunkAPI) => {
     try {
@@ -12,10 +13,24 @@ export const getUser = createAsyncThunk("user/me", async (_, thunkAPI) => {
         return null;
 
     }
-})
+});
+
+// Logout 
+export const handleLogout = createAsyncThunk("user/sign-out", async (_, thunkAPI) => {
+    try {
+        await axiosInstance.get("/user/sign-out")
+        disconnectSocket();
+        toast.success("Logout Successfull")
+        return null;
+    } catch (error) {
+        toast.error("Logout error", error)
+        console.log(error);
+        return thunkAPI.rejectWithValue("logout error");
+    }
+});
 
 const authSlice = createSlice({
-    name: auth,
+    name: "auth",
     initialState: {
         authUser: null,
         isSigningUp: false,
