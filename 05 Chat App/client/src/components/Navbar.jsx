@@ -1,25 +1,26 @@
 import { LogOut, MessageSquare, Settings, User } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../store/slices/authSlice"
 
 const Navbar = () => {
   const { authUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(logout);
+    dispatch(handleLogout);
   };
 
   return (
     <nav className="w-full bg-white dark:bg-gray-900 shadow-md px-6 py-3 flex items-center justify-between">
       {/* Logo / Brand Name */}
       <div className="flex items-center space-x-3">
-        <img
-          src="https://png.pngtree.com/png-clipart/20190604/original/pngtree-creative-company-logo-png-image_1197025.jpg"
-          alt="Logo"
-          className="w-9 h-9 object-cover rounded-full"
-        />
+        <Link to={"/"}>
+          <img
+            src="https://png.pngtree.com/png-clipart/20190604/original/pngtree-creative-company-logo-png-image_1197025.jpg"
+            alt="Logo"
+            className="w-9 h-9 object-cover rounded-full"
+          />
+        </Link>
         <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">
           My App
         </h1>

@@ -7,9 +7,11 @@ export const getUser = createAsyncThunk("user/me", async (_, thunkAPI) => {
     try {
         const res = await axiosInstance.get("user/me");
         connectSocket(res?.data?.user);
+        console.log("get user", res?.data);
         return res?.data?.user;
     } catch (error) {
         console.log("Error fetching user", error);
+        toast.error("Logout error", error)
         return null;
 
     }
@@ -29,12 +31,27 @@ export const handleLogout = createAsyncThunk("user/sign-out", async (_, thunkAPI
     }
 });
 
+// Login 
+export const login = createAsyncThunk("user/sign-in", async (data, thunkAPI) => {
+    try {
+        let res = await axiosInstance.get("/user/sign-in", data)
+        connectSocket(res?.data);
+        toast.success("Login Successfull")
+        console.log("login res", res?.data)
+        return null;
+    } catch (error) {
+        toast.error("Login error", error)
+        console.log(error);
+        return thunkAPI.rejectWithValue("login error");
+    }
+});
+
 const authSlice = createSlice({
     name: "auth",
     initialState: {
         authUser: null,
         isSigningUp: false,
-        isLoggingUp: false,
+        isLoggingIn: false,
         isUpdatiingProfile: false,
         isCheckingAuth: false,
         onlineUsers: []
@@ -54,11 +71,21 @@ const authSlice = createSlice({
                 state.authUser = null;
                 state.isCheckingAuth = false;
             })
-            .addCase(logout.fulfilled, (state) => {
+            .addCase(handleLogout.fulfilled, (state) => {
                 state.authUser = null;
             })
-            .addCase(logout.rejected, (state) => {
+            .addCase(handleLogout.rejected, (state) => {
                 state.authUser = state.authUser;
+            })
+            .addCase(login.pending, (state) => {
+                state.isLoggingIn = true
+            })
+            .addCase(login.fulfilled, (state, action) => {
+                state.authUser = action.payload;
+                state.isLoggingIn = false;
+            })
+            .addCase(login.rejected, (state) => {
+                state.isLoggingIn = false;
             })
     }
 });
