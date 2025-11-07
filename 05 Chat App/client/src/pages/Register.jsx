@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 
 const Register = () => {
-  return <></>;
+  return <div>Regiseter</div>;
 };
 
 export default Register;

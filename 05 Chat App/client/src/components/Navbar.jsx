@@ -1,13 +1,14 @@
 import { LogOut, MessageSquare, Settings, User } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { handleLogout } from "../store/slices/authSlice"
 
 const Navbar = () => {
   const { authUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    dispatch(handleLogout);
+  const logout = () => {
+    dispatch(handleLogout());
   };
 
   return (
@@ -68,7 +69,7 @@ const Navbar = () => {
             </Link>
 
             <button
-              onClick={handleLogout}
+              onClick={logout}
               className="flex items-center gap-2 px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition"
             >
               <LogOut className="w-5 h-5" />

@@ -2,6 +2,7 @@ import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare } from "lucide-react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../store/slices/authSlice";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -95,12 +96,12 @@ const Login = () => {
         {/* Footer */}
         <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
           Don’t have an account?{" "}
-          <a
-            href="/register"
+          <Link
+            to={"/register"}
             className="text-blue-600 hover:text-blue-700 dark:text-blue-400 font-medium"
           >
             Sign up
-          </a>
+          </Link>
         </div>
       </div>
     </div>

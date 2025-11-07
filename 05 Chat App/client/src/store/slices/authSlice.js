@@ -7,11 +7,9 @@ export const getUser = createAsyncThunk("user/me", async (_, thunkAPI) => {
     try {
         const res = await axiosInstance.get("user/me");
         connectSocket(res?.data?.user);
-        console.log("get user", res?.data);
-        return res?.data?.user;
+        // console.log("get user", res?.data);
+        return res?.data;
     } catch (error) {
-        console.log("Error fetching user", error);
-        toast.error("Logout error", error)
         return null;
 
     }
@@ -25,8 +23,6 @@ export const handleLogout = createAsyncThunk("user/sign-out", async (_, thunkAPI
         toast.success("Logout Successfull")
         return null;
     } catch (error) {
-        toast.error("Logout error", error)
-        console.log(error);
         return thunkAPI.rejectWithValue("logout error");
     }
 });
@@ -38,7 +34,7 @@ export const login = createAsyncThunk("user/sign-in", async (data, thunkAPI) => 
         connectSocket(res?.data);
         toast.success("Login Successfull")
         console.log("login res", res?.data)
-        return null;
+        return res?.data;
     } catch (error) {
         toast.error(error?.response?.data?.message || "Login failed", error)
         console.log(error);
