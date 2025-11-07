@@ -42,6 +42,21 @@ export const login = createAsyncThunk("user/sign-in", async (data, thunkAPI) => 
     }
 });
 
+// Regisetr 
+export const signup = createAsyncThunk("user/sign-up", async (data, thunkAPI) => {
+    try {
+        let res = await axiosInstance.post("/user/sign-up", data)
+        connectSocket(res?.data);
+        toast.success("Register Successfull")
+        console.log("register res", res?.data)
+        return res?.data;
+    } catch (error) {
+        toast.error(error?.response?.data?.message || "register failed", error)
+        console.log(error);
+        return thunkAPI.rejectWithValue("register error");
+    }
+});
+
 const authSlice = createSlice({
     name: "auth",
     initialState: {
@@ -82,6 +97,16 @@ const authSlice = createSlice({
             })
             .addCase(login.rejected, (state) => {
                 state.isLoggingIn = false;
+            })
+            .addCase(signup.pending, (state) => {
+                state.isSigningUp = true;
+            })
+            .addCase(signup.fulfilled, (state, action) => {
+                state.authUser = action.payload;
+                state.isSigningUp = false;
+            })
+            .addCase(signup.rejected, (state) => {
+                state.isSigningUp = false
             })
     }
 });
