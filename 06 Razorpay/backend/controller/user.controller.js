@@ -52,6 +52,81 @@ export const register = async (req, res) => {
 }
 
 // Verify Eamil 
-export const verfyUserEmail = () => {
+export const verfy = async (req, res) => {
+    try {
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            res.status(400).json({
+                success: false,
+                message: "authorization token invalid"
+            })
+        }
+        const token = authHeader?.split(" ")[1];
+        let decode;
+        try {
+            decode.jwt.verfy(token, process.env.JWT_SECRET_KEY)
+        } catch (error) {
+            console.log("token expiry error")
+            return res.status(400).json({
+                message: false,
+                message: "Token expiry error"
+            })
+        }
+        const user = await User.findById(decode.id);
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: "user not found"
+            })
+        }
+        user.token = null;
+        user.isVerified = true;
+        await user.save();
 
+        return res.status(200).json({
+            success: true,
+            message: "Email verified Successfully"
+        })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "internal server error"
+        })
+    }
 };
+
+// Login 
+export const login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "fill all fields"
+            })
+        }
+        const existingUser = await User.findOne({ email });
+        if (!existingUser) {
+            return res.status(400).json({
+                success: false,
+                message: "user not found"
+            })
+        }
+        const isPasswordMatch = await bcrypt.compare(password, existingUser.password);
+        if (!isPasswordMatch) {
+            return res.status(400).json({
+                success: false,
+                message: "invalid credentials"
+            })
+        }
+
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "login error"
+        })
+    }
+}
