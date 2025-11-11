@@ -121,7 +121,20 @@ export const login = async (req, res) => {
                 message: "invalid credentials"
             })
         }
+        // generate token 
+        const accessToken = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET_KEY, { expiresIn: "7d" });
+        const refreshToken = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET_KEY, { expiresIn: "15d" });
 
+        existingUser.isLoggedIn = true;
+        await existingUser.save();
+
+        return res.status(201).json({
+            success: true,
+            message: `Welcome back ${existingUser?.firstName} `,
+            user: existingUser,
+            accessToken,
+            refreshToken
+        })
 
     } catch (error) {
         res.status(500).json({
@@ -129,4 +142,9 @@ export const login = async (req, res) => {
             message: "login error"
         })
     }
+}
+
+// Logout 
+export const logout = async (req, res) => {
+
 }
