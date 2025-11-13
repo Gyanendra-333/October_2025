@@ -10,9 +10,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -30,7 +34,20 @@ const SignUp = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log("Form submitted:", formData);
+        try {
+            const res = await axios.post("http://localhost:3000/api/v1/user/register", formData, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }) 
+            console.log("regiser res", res?.data);
+            toast.success(res?.data?.message || "Register Successfull.");
+            setFormData("");
+            navigate("/");
+        } catch (error) {
+            console.log(error);
+            toast.error("Register failed");
+        }
     };
 
     return (
