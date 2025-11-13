@@ -39,11 +39,11 @@ const SignUp = () => {
                 headers: {
                     "Content-Type": "application/json"
                 }
-            }) 
+            })
             console.log("regiser res", res?.data);
             toast.success(res?.data?.message || "Register Successfull.");
             setFormData("");
-            navigate("/");
+            navigate("/login");
         } catch (error) {
             console.log(error);
             toast.error("Register failed");
