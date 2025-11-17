@@ -44,9 +44,12 @@ const UserSchema: Schema<User> = new Schema({
         trim: true,
         match: [/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/, "Please enter a valid email"]
     },
+    password: {
+        type: String,
+        required: [true, "password is required"]
+    },
     verifyCode: {
         type: String,
-        required: [true, "verify Code is required"],
     },
     isVerified: {
         type: Boolean,
@@ -54,7 +57,6 @@ const UserSchema: Schema<User> = new Schema({
     },
     verifyCodeExpiry: {
         type: Date,
-        required: [true, "verify Expiry Code is required"],
     },
     isAcceptingMessage: {
         type: Boolean,
@@ -64,7 +66,7 @@ const UserSchema: Schema<User> = new Schema({
 
 
 });
- 
+
 const userModel = (mongoose.models.User as mongoose.Model<User>) || (mongoose.model<User>("User", UserSchema));
 
 export default userModel;
