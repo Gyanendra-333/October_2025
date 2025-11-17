@@ -29,3 +29,14 @@ export const signUpSchema = z
         message: "Passwords do not match",
         path: ["confirmPassword"],
     });
+
+
+// signInSchema
+export const signInSchema = z.object({
+    email: z
+        .email("Please enter a valid email"),
+
+    password: z
+        .string()
+        .min(6, "Password must be at least 6 characters"),
+});
