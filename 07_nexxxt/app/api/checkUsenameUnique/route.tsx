@@ -24,7 +24,7 @@ export default function CheckUsernamePage() {
             }
 
         } catch (err) {
-            console.error(err);
+            console.error("Check username Error", err);
         }
 
         setLoading(false);
