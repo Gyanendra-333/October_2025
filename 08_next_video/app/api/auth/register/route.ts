@@ -1,12 +1,51 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/UserModel";
 import { connectDB } from "@/lib/db";
-
+import bcrypt from "bcryptjs";
 
 export async function POST(request: NextRequest) {
     try {
+        await connectDB();
 
-    } catch (error) {
-        console.log(error);
+        const { name, email, password } = await request.json();
+
+        // 1) Validate
+        if (!name || !email || !password) {
+            return NextResponse.json(
+                { message: "All fields are required" },
+                { status: 400 }
+            );
+        }
+
+        // 2) Check if user exists
+        const existingUser = await User.findOne({ email });
+
+        if (existingUser) {
+            return NextResponse.json(
+                { message: "Email already registered" },
+                { status: 400 }
+            );
+        }
+
+        // 3) Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // 4) Create user
+        await User.create({
+            name,
+            email,
+            password: hashedPassword,
+        });
+
+        return NextResponse.json(
+            { message: "User registered successfully" },
+            { status: 201 }
+        );
+    } catch (error: any) {
+        console.log("REGISTER_ERROR:", error);
+        return NextResponse.json(
+            { message: "Something went wrong" },
+            { status: 500 }
+        );
     }
-}; 
+}
