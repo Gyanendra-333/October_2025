@@ -9,7 +9,6 @@ export async function POST(request: NextRequest) {
 
         const { name, email, password } = await request.json();
 
-        // 1) Validate
         if (!name || !email || !password) {
             return NextResponse.json(
                 { message: "All fields are required" },
@@ -17,7 +16,6 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // 2) Check if user exists
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
@@ -27,7 +25,6 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // 3) Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // 4) Create user
