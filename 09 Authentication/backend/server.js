@@ -1,9 +1,9 @@
-import express from "express";
-import { config } from "dotenv";
-import cookieParser from "cookie-parser";
-import cors from "cors";
-
-config({ path: "./env" });
-export const app = express();
+import { app } from "./app.js";
+import { dbConnect } from "./utils/dbConnect.js";
 
 
+app.listen(process.env.PORT, () => {
+    console.log(`✅ Server is Running Port : ${process.env.PORT}.`)
+});
+
+dbConnect();
