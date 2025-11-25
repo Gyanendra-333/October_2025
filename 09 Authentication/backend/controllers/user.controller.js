@@ -1,0 +1,62 @@
+import User from "../models/user.model.js";
+import ErrorHandler from "../utils/errorHandler.js";
+import { CatchAsyncError } from "../middleware/catchAsyncError.js";
+import crypto from "crypto";
+
+export const register = CatchAsyncError(async (req, res, next) => {
+
+    const { name, email, phone, password, verificationMethod } = req.body;
+
+    if (!name || !email || !phone || !password) {
+        return next(new ErrorHandler("All fields are required", 400));
+    }
+
+    // -------------------------------------
+    // 1️⃣ Check if email already exists
+    // -------------------------------------
+    const isEmailExist = await User.findOne({ email });
+
+    if (isEmailExist) {
+        return next(new ErrorHandler("Email already registered", 400));
+    }
+
+    // -------------------------------------
+    // 2️⃣ Generate Verification Code / OTP
+    // -------------------------------------
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString(); // 6 digit OTP
+    const verificationCodeExpire = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+    // -------------------------------------
+    // 3️⃣ Create User
+    // -------------------------------------
+    const user = await User.create({
+        name,
+        email,
+        phone,
+        password,
+        verificationCode,
+        verificationCodeExpire,
+        accountVerified: false,
+    });
+
+    // -------------------------------------
+    // 4️⃣ Send Verification Method
+    // -------------------------------------
+    if (verificationMethod === "email") {
+        // Yaha email sending ka function call hoga
+        // sendEmailVerification(email, verificationCode);
+    }
+
+    res.status(201).json({
+        success: true,
+        message: "User registered successfully. Please verify your account.",
+        verificationCode, // For testing purpose only. Production me remove kar dena.
+        user: {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            accountVerified: user.accountVerified
+        }
+    });
+});
