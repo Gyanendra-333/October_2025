@@ -1,14 +1,13 @@
 import User from "../models/user.model.js";
-import ErrorHandler from "../utils/errorHandler.js";
 import { CatchAsyncError } from "../middleware/catchAsyncError.js";
-import crypto from "crypto";
+import { errorMiddleware } from "../middleware/error-middleware.js";
 
 export const register = CatchAsyncError(async (req, res, next) => {
 
     const { name, email, phone, password, verificationMethod } = req.body;
 
     if (!name || !email || !phone || !password) {
-        return next(new ErrorHandler("All fields are required", 400));
+        return next(new errorMiddleware("All fields are required", 400));
     }
 
     // -------------------------------------
@@ -17,7 +16,7 @@ export const register = CatchAsyncError(async (req, res, next) => {
     const isEmailExist = await User.findOne({ email });
 
     if (isEmailExist) {
-        return next(new ErrorHandler("Email already registered", 400));
+        return next(new errorMiddleware("Email already registered", 400));
     }
 
     // -------------------------------------
