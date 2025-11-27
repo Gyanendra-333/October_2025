@@ -1,6 +1,6 @@
-import User from "../models/user.model.js";
 import { CatchAsyncError } from "../middleware/catchAsyncError.js";
 import { errorMiddleware } from "../middleware/error-middleware.js";
+import { User } from "../models/userModel.js";
 
 export const register = CatchAsyncError(async (req, res, next) => {
 
