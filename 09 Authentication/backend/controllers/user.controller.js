@@ -10,24 +10,15 @@ export const register = CatchAsyncError(async (req, res, next) => {
         return next(new errorMiddleware("All fields are required", 400));
     }
 
-    // -------------------------------------
-    // 1️⃣ Check if email already exists
-    // -------------------------------------
     const isEmailExist = await User.findOne({ email });
 
     if (isEmailExist) {
         return next(new errorMiddleware("Email already registered", 400));
     }
 
-    // -------------------------------------
-    // 2️⃣ Generate Verification Code / OTP
-    // -------------------------------------
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString(); // 6 digit OTP
     const verificationCodeExpire = Date.now() + 10 * 60 * 1000; // 10 minutes
 
-    // -------------------------------------
-    // 3️⃣ Create User
-    // -------------------------------------
     const user = await User.create({
         name,
         email,

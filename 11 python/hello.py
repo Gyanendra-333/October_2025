@@ -1,52 +1,63 @@
 
-# # # # # # # print("hello world")
+# # # # # # # # # print("hello world")
 
-# # # # # # # # commenting in python
+# # # # # # # # # # commenting in python
 
-# # # # # # # name = "Gyanendra"
-# # # # # # # print(name)
-
-
-# # # # # # # # String
-# # # # # # # name = "Gyanendra"
-# # # # # # # print(name)
-
-# # # # # # string_name = "Gyanendra as String"
-# # # # # # print(len(string_name))
-# # # # # # print(string_name[3])
-# # # # # # print(string_name[-3])
-
-# # # # # # print(string_name[0:3])
+# # # # # # # # # name = "Gyanendra"
+# # # # # # # # # print(name)
 
 
-# # # # # print("This is testing message 'check' message")
-# # # # # print('This is testing message "check"  message')
+# # # # # # # # # # String
+# # # # # # # # # name = "Gyanendra"
+# # # # # # # # # print(name)
 
-# # # # name = "Gyanendra"
-# # # # print(name.upper())
-# # # # print(name.lower())
-# # # # print(name.find("y"))
+# # # # # # # # string_name = "Gyanendra as String"
+# # # # # # # # print(len(string_name))
+# # # # # # # # print(string_name[3])
+# # # # # # # # print(string_name[-3])
 
-
-# # # import math
-
-
-# # # num = 2.1
-# # # print(math.ceil(num))
+# # # # # # # # print(string_name[0:3])
 
 
-# # print()
-# # input()
+# # # # # # # print("This is testing message 'check' message")
+# # # # # # # print('This is testing message "check"  message')
+
+# # # # # # name = "Gyanendra"
+# # # # # # print(name.upper())
+# # # # # # print(name.lower())
+# # # # # # print(name.find("y"))
 
 
-# name = 5
-# name2 = "5"
-# result = name+"2"
-# print(result)
+# # # # # import math
 
 
-num = 30
-if (num >= 50):
-    print("check pass")
+# # # # # num = 2.1
+# # # # # print(math.ceil(num))
 
-print("check")
+
+# # # # print()
+# # # # input()
+
+
+# # # name = 5
+# # # name2 = "5"
+# # # result = name+"2"
+# # # print(result)
+
+
+# # num = 30
+# # if (num >= 50):
+# #     print("check pass")
+
+# # print("check")
+
+
+# print("enter your age")
+# gender = input("male f and female f")
+# age = input("enter age")
+
+
+for number in range(5, 10, 2):
+    print(number)
+
+print("loop exit")
