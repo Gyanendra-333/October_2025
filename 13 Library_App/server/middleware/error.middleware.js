@@ -1,6 +1,6 @@
-import ErrorHandler from "../utils/errorHandler";
+import ErrorHandler from "../utils/errorHandler.js";
 
-export const errorMiddleware = (err, req, res, next) => {
+const errorMiddleware = (err, req, res, next) => {
     err.message = err.message || "Internal Server Error";
     err.statusCode = err.statusCode || 500;
 
@@ -38,3 +38,5 @@ export const errorMiddleware = (err, req, res, next) => {
         message: err.message,
     });
 };
+
+export default errorMiddleware;
