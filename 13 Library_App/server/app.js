@@ -5,7 +5,6 @@ import cors from "cors"
 import errorMiddleware from "./middleware/error.middleware.js";
 
 dotnev.config();
-
 export const app = express();
 
 app.use(cors({
