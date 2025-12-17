@@ -1,9 +1,9 @@
 import { app } from "./app.js";
-import dotnev from "dotenv";
+import { connectDB } from "./utils/db.js";
 
-dotnev.config();
 
 
 app.listen(process.env.PORT, () => {
-    console.log(`Server is Running Port ${process.env.PORT || 4000}.`)
+    console.log(`Server is Running Port ${process.env.PORT}.`)
 });
+connectDB();
