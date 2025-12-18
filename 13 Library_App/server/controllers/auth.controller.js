@@ -1,5 +1,7 @@
 import { User } from "../models/user.model.js";
-import { asyncHandler } from "../utils/catchAsyncError";
+import { asyncHandler } from "../utils/catchAsyncError.js";
+import ErrorHandler from "../utils/errorHandler.js";
+import bcrypt from "bcrypt";
 
 
 export const register = asyncHandler(async (req, res, next) => {
