@@ -73,3 +73,13 @@ export const logout = asyncHandler(async (req, res, next) => {
         console.log("Error in logout controller:", error);
     }
 });
+
+// Forgot Password 
+export const forgotPassword = asyncHandler(async (req, res, next) => {
+    // Implementation for forgot password functionality
+});
+
+// Reset Password 
+export const resetPassword = asyncHandler(async (req, res, next) => {
+    // Implementation for reset password functionality
+});
