@@ -1,0 +1,12 @@
+
+
+Develeopment Team-
+1. Developer
+2. Build
+3. Test 
+4. Quality Assurance
+
+Operation Team-
+1. Deploy
+2. Maintenance
+3. Monitoring
