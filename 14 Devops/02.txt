@@ -1,0 +1,6 @@
+
+
+1  cat = create file and edit and write file content 
+2  touch = create empty file 
+3 vi/vim = create file for write and edit file 
+4 nano = create file and edit that file 
