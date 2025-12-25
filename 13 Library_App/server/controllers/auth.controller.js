@@ -77,9 +77,14 @@ export const logout = asyncHandler(async (req, res, next) => {
 // Forgot Password 
 export const forgotPassword = asyncHandler(async (req, res, next) => {
     // Implementation for forgot password functionality
+
 });
 
 // Reset Password 
 export const resetPassword = asyncHandler(async (req, res, next) => {
     // Implementation for reset password functionality
+    const { token } = req.params;
+    const { newPassword } = req.body;
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    // Further implementation needed to find user by token and update password
 });
