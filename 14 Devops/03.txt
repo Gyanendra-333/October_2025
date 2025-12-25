@@ -1,0 +1,6 @@
+
+
+=> virtualisation- means partiotion of hardware memory in small parts.
+=> cloud computing service => includes storage,database,networking tools and software over the internet.
+
+=> 
